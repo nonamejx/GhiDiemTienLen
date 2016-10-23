@@ -1,5 +1,7 @@
 package com.nonamejx.ghidiemtienlen.model;
 
+import java.util.UUID;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import lombok.Getter;
@@ -21,4 +23,8 @@ public class Result extends RealmObject {
     @Getter
     @Setter
     private int result;
+
+    public Result() {
+        this.resultId = UUID.randomUUID().toString();
+    }
 }
