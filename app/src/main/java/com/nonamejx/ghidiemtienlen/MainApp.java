@@ -16,7 +16,7 @@ public class MainApp extends Application {
     @AfterInject
     public void init() {
         // Configure Realm for the application
-        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(this).build();
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(this).deleteRealmIfMigrationNeeded().build();
         // Realm.deleteRealm(realmConfiguration); // Clean the old realm
         Realm.setDefaultConfiguration(realmConfiguration);
     }

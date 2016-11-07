@@ -8,4 +8,16 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="textView_player_name">
+        <item name="android:padding">@dimen/default_padding</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/default_textSize</item>
+    </style>
+
+    <style name="textView_result">
+        <item name="android:padding">@dimen/default_padding</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/default_textSize</item>
+    </style>
 </resources>

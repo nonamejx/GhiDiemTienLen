@@ -19,7 +19,7 @@ public class Turn extends RealmObject {
 
     @Getter
     @Setter
-    public RealmList<Result> results;
+    public RealmList<Result> results; // the size of this array is 4 - the number of players
 
     public Turn() {
         this.turnId = UUID.randomUUID().toString();

@@ -12,4 +12,5 @@ public interface IDatabaseManagement {
     List<Game> getGames();
     void addGame(Game game);
     void deleteAllGames();
+    String getPlayerName(String playerId);
 }

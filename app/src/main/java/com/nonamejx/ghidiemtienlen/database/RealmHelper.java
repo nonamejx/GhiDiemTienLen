@@ -1,6 +1,7 @@
 package com.nonamejx.ghidiemtienlen.database;
 
 import com.nonamejx.ghidiemtienlen.model.Game;
+import com.nonamejx.ghidiemtienlen.model.Player;
 
 import java.util.List;
 
@@ -45,5 +46,10 @@ public class RealmHelper implements IDatabaseManagement {
         mRealm.beginTransaction();
         games.clear();
         mRealm.commitTransaction();
+    }
+
+    @Override
+    public String getPlayerName(String playerId) {
+        return mRealm.where(Player.class).equalTo("playerId", playerId).findFirst().getPlayerName();
     }
 }
