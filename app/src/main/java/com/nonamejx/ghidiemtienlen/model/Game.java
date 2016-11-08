@@ -56,6 +56,25 @@ public class Game extends RealmObject {
             gameResult.getResults().get(2).setResult(gameResult.getResults().get(2).getResult() + turn.getResults().get(2).getResult());
             gameResult.getResults().get(3).setResult(gameResult.getResults().get(3).getResult() + turn.getResults().get(3).getResult());
         }
+
+        // find max positions
+        int maxPosition = 1, minPosition = 1;
+        for (byte i = 0; i < Constants.NUMBER_OF_PLAYERS; i++) {
+            if (gameResult.getResults().get(i).getResult() < gameResult.getResults().get(minPosition).getResult()) {
+                minPosition = i;
+            }
+            if (gameResult.getResults().get(i).getResult() > gameResult.getResults().get(maxPosition).getResult()) {
+                maxPosition = i;
+            }
+        }
+        for (byte i = 0; i < Constants.NUMBER_OF_PLAYERS; i++) {
+            if (gameResult.getResults().get(i).getResult() == gameResult.getResults().get(minPosition).getResult()) {
+                gameResult.getMinPositions()[i] = i;
+            }
+            if (gameResult.getResults().get(i).getResult() == gameResult.getResults().get(maxPosition).getResult()) {
+                gameResult.getMaxPositions()[i] = i;
+            }
+        }
         return gameResult;
     }
 }

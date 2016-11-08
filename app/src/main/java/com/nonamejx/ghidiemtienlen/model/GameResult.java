@@ -14,6 +14,14 @@ public class GameResult extends RealmObject {
     @Setter
     private RealmList<Result> results; // the size of this array is 4 - the number of players
 
+    @Getter
+    @Setter
+    private byte[] minPositions = {-1, -1, -1, -1};
+
+    @Getter
+    @Setter
+    private byte[] maxPositions = {-1, -1, -1, -1};
+
     public GameResult() {
         results = new RealmList<>();
     }

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.nonamejx.ghidiemtienlen.R;
+import com.nonamejx.ghidiemtienlen.common.Constants;
 import com.nonamejx.ghidiemtienlen.database.RealmHelper;
 import com.nonamejx.ghidiemtienlen.model.GameResult;
 
@@ -34,14 +35,16 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
 
     @Override
     public void onBindViewHolder(GameViewHolder holder, int position) {
-        holder.tvPlayer1.setText(RealmHelper.getInstance().getPlayerName(mGameResults.get(position).getResults().get(0).getPlayerId()));
-        holder.tvPlayer2.setText(RealmHelper.getInstance().getPlayerName(mGameResults.get(position).getResults().get(1).getPlayerId()));
-        holder.tvPlayer3.setText(RealmHelper.getInstance().getPlayerName(mGameResults.get(position).getResults().get(2).getPlayerId()));
-        holder.tvPlayer4.setText(RealmHelper.getInstance().getPlayerName(mGameResults.get(position).getResults().get(3).getPlayerId()));
-        holder.tvResult1.setText(mGameResults.get(position).getResults().get(0).getResult() + "");
-        holder.tvResult2.setText(mGameResults.get(position).getResults().get(1).getResult() + "");
-        holder.tvResult3.setText(mGameResults.get(position).getResults().get(2).getResult() + "");
-        holder.tvResult4.setText(mGameResults.get(position).getResults().get(3).getResult() + "");
+        for (int i = 0; i < Constants.NUMBER_OF_PLAYERS; i++) {
+            holder.tvPlayers[i].setText(RealmHelper.getInstance().getPlayerName(mGameResults.get(position).getResults().get(i).getPlayerId()));
+            holder.tvResults[i].setText(mGameResults.get(position).getResults().get(i).getResult() + "");
+            if (mGameResults.get(position).getMinPositions()[i] > -1) {
+                holder.tvResults[i].setBackgroundResource(R.drawable.shape_red_background);
+            }
+            if (mGameResults.get(position).getMaxPositions()[i] > -1) {
+                holder.tvResults[i].setBackgroundResource(R.drawable.shape_green_background);
+            }
+        }
     }
 
     @Override
@@ -50,18 +53,20 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
     }
 
     class GameViewHolder extends RecyclerView.ViewHolder {
-        final TextView tvPlayer1, tvPlayer2, tvPlayer3, tvPlayer4, tvResult1, tvResult2, tvResult3, tvResult4;
+        final TextView[] tvPlayers, tvResults;
 
         public GameViewHolder(View itemView) {
             super(itemView);
-            tvPlayer1 = (TextView) itemView.findViewById(R.id.tvPlayer1);
-            tvPlayer2 = (TextView) itemView.findViewById(R.id.tvPlayer2);
-            tvPlayer3 = (TextView) itemView.findViewById(R.id.tvPlayer3);
-            tvPlayer4 = (TextView) itemView.findViewById(R.id.tvPlayer4);
-            tvResult1 = (TextView) itemView.findViewById(R.id.tvResult1);
-            tvResult2 = (TextView) itemView.findViewById(R.id.tvResult2);
-            tvResult3 = (TextView) itemView.findViewById(R.id.tvResult3);
-            tvResult4 = (TextView) itemView.findViewById(R.id.tvResult4);
+            tvPlayers = new TextView[4];
+            tvResults = new TextView[4];
+            tvPlayers[0] = (TextView) itemView.findViewById(R.id.tvPlayer1);
+            tvPlayers[1] = (TextView) itemView.findViewById(R.id.tvPlayer2);
+            tvPlayers[2] = (TextView) itemView.findViewById(R.id.tvPlayer3);
+            tvPlayers[3] = (TextView) itemView.findViewById(R.id.tvPlayer4);
+            tvResults[0] = (TextView) itemView.findViewById(R.id.tvResult1);
+            tvResults[1] = (TextView) itemView.findViewById(R.id.tvResult2);
+            tvResults[2] = (TextView) itemView.findViewById(R.id.tvResult3);
+            tvResults[3] = (TextView) itemView.findViewById(R.id.tvResult4);
         }
     }
 }

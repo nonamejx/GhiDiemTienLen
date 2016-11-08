@@ -43,7 +43,7 @@ public class GameFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // create sample data
-        // createSampleData();
+         createSampleData();
     }
 
     @Nullable
@@ -103,7 +103,6 @@ public class GameFragment extends Fragment {
 
                     results.add(result);
                 }
-
                 turn.setResults(results);
                 turns.add(turn);
             }
