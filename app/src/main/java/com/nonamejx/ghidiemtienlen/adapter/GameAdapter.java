@@ -9,8 +9,7 @@ import android.widget.TextView;
 
 import com.nonamejx.ghidiemtienlen.R;
 import com.nonamejx.ghidiemtienlen.common.Constants;
-import com.nonamejx.ghidiemtienlen.database.RealmHelper;
-import com.nonamejx.ghidiemtienlen.model.GameResult;
+import com.nonamejx.ghidiemtienlen.model.Game;
 
 import java.util.List;
 
@@ -20,11 +19,11 @@ import java.util.List;
  */
 public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder> {
     private final Context mContext;
-    private final List<GameResult> mGameResults;
+    private final List<Game> mGames;
 
-    public GameAdapter(Context context, List<GameResult> gameResults) {
+    public GameAdapter(Context context, List<Game> games) {
         mContext = context;
-        mGameResults = gameResults;
+        mGames = games;
     }
 
     @Override
@@ -35,21 +34,34 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
 
     @Override
     public void onBindViewHolder(GameViewHolder holder, int position) {
+        cleanBackground(holder.tvResults);
         for (int i = 0; i < Constants.NUMBER_OF_PLAYERS; i++) {
-            holder.tvPlayers[i].setText(RealmHelper.getInstance().getPlayerName(mGameResults.get(position).getResults().get(i).getPlayerId()));
-            holder.tvResults[i].setText(mGameResults.get(position).getResults().get(i).getResult() + "");
-            if (mGameResults.get(position).getMinPositions()[i] > -1) {
+            holder.tvPlayers[i].setText(mGames.get(position).getPlayerNames()[i]);
+            holder.tvResults[i].setText(mGames.get(position).calculateFinalResult()[i] + "");
+        }
+
+        // change color
+        int[] minPos = mGames.get(position).getMinResultPositions();
+        int[] maxPos = mGames.get(position).getMaxResultPositions();
+        for (int i = 0; i < Constants.NUMBER_OF_PLAYERS; i++) {
+            if (minPos[i] > -1) {
                 holder.tvResults[i].setBackgroundResource(R.drawable.shape_red_background);
             }
-            if (mGameResults.get(position).getMaxPositions()[i] > -1) {
+            if (maxPos[i] > -1) {
                 holder.tvResults[i].setBackgroundResource(R.drawable.shape_green_background);
             }
         }
     }
 
+    private void cleanBackground(TextView[] textViews) {
+        for (TextView tv : textViews) {
+            tv.setBackgroundResource(R.drawable.shape_transparent_background);
+        }
+    }
+
     @Override
     public int getItemCount() {
-        return mGameResults.size();
+        return mGames.size();
     }
 
     class GameViewHolder extends RecyclerView.ViewHolder {

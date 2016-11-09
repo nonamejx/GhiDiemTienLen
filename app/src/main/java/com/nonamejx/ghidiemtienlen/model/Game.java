@@ -2,12 +2,8 @@ package com.nonamejx.ghidiemtienlen.model;
 
 import com.nonamejx.ghidiemtienlen.common.Constants;
 
-import java.util.Date;
 import java.util.UUID;
 
-import io.realm.RealmList;
-import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,66 +11,89 @@ import lombok.Setter;
  * Created by noname
  * on 22/10/2016.
  */
-public class Game extends RealmObject {
-    @PrimaryKey
+public class Game {
     @Getter
     private String gameId;
 
     @Getter
     @Setter
-    private Date createdDate;
+    private int numberOfPlayers;
 
     @Getter
     @Setter
-    private int numberOfTurns = 0;
+    private int numberOfTurns;
 
     @Getter
     @Setter
-    public RealmList<Player> players;
+    private String[] playerNames;
 
     @Getter
     @Setter
-    public RealmList<Turn> turns;
+    private int[][] result;
 
-    public Game() {
+    private int[] minResultPositions = {-1, -1, -1, -1};
+
+    private int[] maxResultPositions = {-1, -1, -1, -1};
+
+    public Game(int numberOfTurns) {
         this.gameId = UUID.randomUUID().toString();
-        this.createdDate = new Date();
-        this.players = new RealmList<>();
-        this.turns = new RealmList<>();
+        this.numberOfPlayers = Constants.NUMBER_OF_PLAYERS;
+        this.numberOfTurns = numberOfTurns;
+        this.result = new int[numberOfTurns][numberOfPlayers];
     }
 
-    public GameResult calculateGameResult() {
-        GameResult gameResult = new GameResult();
+    public Game(String[] playerNames, int numberOfTurns) {
+        this.gameId = UUID.randomUUID().toString();
+        this.numberOfPlayers = Constants.NUMBER_OF_PLAYERS;
+        this.numberOfTurns = numberOfTurns;
+        this.playerNames = playerNames;
+        this.result = new int[numberOfTurns][numberOfPlayers];
+    }
+
+    public int[] calculateFinalResult() {
+        int[] finalResult = new int[4];
+        for (int i = 0; i < this.numberOfTurns; i++) {
+            for (int j = 0; j < this.numberOfPlayers; j++) {
+                finalResult[j] += this.result[i][j];
+            }
+        }
+        return finalResult;
+    }
+
+    public GameRealmObject toGameRealmObject() {
+        return new GameRealmObject(this);
+    }
+
+    public int[] getMinResultPositions() {
+        final int[] finalResult = calculateFinalResult();
+        int minVal = finalResult[0];
+        for (int i = 1; i < Constants.NUMBER_OF_PLAYERS; i++) {
+            if (finalResult[i] < minVal) {
+                minVal = finalResult[i];
+            }
+        }
         for (int i = 0; i < Constants.NUMBER_OF_PLAYERS; i++) {
-            Result result = new Result();
-            result.setPlayerId(players.get(i).getPlayerId());
-            gameResult.getResults().add(result);
-        }
-        for (Turn turn: turns) {
-            gameResult.getResults().get(0).setResult(gameResult.getResults().get(0).getResult() + turn.getResults().get(0).getResult());
-            gameResult.getResults().get(1).setResult(gameResult.getResults().get(1).getResult() + turn.getResults().get(1).getResult());
-            gameResult.getResults().get(2).setResult(gameResult.getResults().get(2).getResult() + turn.getResults().get(2).getResult());
-            gameResult.getResults().get(3).setResult(gameResult.getResults().get(3).getResult() + turn.getResults().get(3).getResult());
-        }
-
-        // find max positions
-        int maxPosition = 1, minPosition = 1;
-        for (byte i = 0; i < Constants.NUMBER_OF_PLAYERS; i++) {
-            if (gameResult.getResults().get(i).getResult() < gameResult.getResults().get(minPosition).getResult()) {
-                minPosition = i;
-            }
-            if (gameResult.getResults().get(i).getResult() > gameResult.getResults().get(maxPosition).getResult()) {
-                maxPosition = i;
+            if (finalResult[i] == minVal) {
+                minResultPositions[i] = i;
             }
         }
-        for (byte i = 0; i < Constants.NUMBER_OF_PLAYERS; i++) {
-            if (gameResult.getResults().get(i).getResult() == gameResult.getResults().get(minPosition).getResult()) {
-                gameResult.getMinPositions()[i] = i;
-            }
-            if (gameResult.getResults().get(i).getResult() == gameResult.getResults().get(maxPosition).getResult()) {
-                gameResult.getMaxPositions()[i] = i;
-            }
-        }
-        return gameResult;
+        return minResultPositions;
     }
+
+    public int[] getMaxResultPositions() {
+        final int[] finalResult = calculateFinalResult();
+        int maxVal = finalResult[0];
+        for (int i = 1; i < Constants.NUMBER_OF_PLAYERS; i++) {
+            if (finalResult[i] > maxVal) {
+                maxVal = finalResult[i];
+            }
+        }
+        for (int i = 0; i < Constants.NUMBER_OF_PLAYERS; i++) {
+            if (finalResult[i] == maxVal) {
+                maxResultPositions[i] = i;
+            }
+        }
+        return maxResultPositions;
+    }
+
 }

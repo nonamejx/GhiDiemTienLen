@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.FrameLayout;
 
 import com.nonamejx.ghidiemtienlen.R;
+import com.nonamejx.ghidiemtienlen.database.DataCenter;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -20,16 +21,19 @@ import java.util.UUID;
  */
 @EActivity
 public abstract class BaseActivity extends AppCompatActivity {
-    // Create a single fragment
-    protected abstract Fragment createFragment();
-    public abstract void afterView();
-
     @ViewById(R.id.flContainer)
     FrameLayout mFlContainer;
+
+    // Create a single fragment
+    protected abstract Fragment createFragment();
+
+    public abstract void afterView();
 
     @AfterViews
     public void init() {
         afterView();
+        // init data
+        DataCenter.getInstance();
 
         // Add fragment
         if (mFlContainer != null) {

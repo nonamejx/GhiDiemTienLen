@@ -8,16 +8,30 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="textView_player_name">
+    <style name="fragmentGame_textView_playerName">
         <item name="android:padding">@dimen/default_padding</item>
         <item name="android:textStyle">bold</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/default_textSize</item>
     </style>
 
-    <style name="textView_result">
+    <style name="fragmentGame_textView_result">
         <item name="android:padding">@dimen/default_padding</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/default_textSize</item>
     </style>
+
+    <style name="fragmentTableResult_textView_playerName">
+        <item name="android:padding">@dimen/default_padding</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/default_textSize</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="fragmentTableResult_textView_result">
+        <item name="android:padding">@dimen/default_padding</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/default_textSize</item>
+    </style>
+
 </resources>

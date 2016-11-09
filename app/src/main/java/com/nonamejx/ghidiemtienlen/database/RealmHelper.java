@@ -1,7 +1,6 @@
 package com.nonamejx.ghidiemtienlen.database;
 
-import com.nonamejx.ghidiemtienlen.model.Game;
-import com.nonamejx.ghidiemtienlen.model.Player;
+import com.nonamejx.ghidiemtienlen.model.GameRealmObject;
 
 import java.util.List;
 
@@ -29,27 +28,29 @@ public class RealmHelper implements IDatabaseManagement {
     }
 
     @Override
-    public List<Game> getGames() {
-        return mRealm.where(Game.class).findAll();
+    public List<GameRealmObject> getAllGameRealmObjects() {
+        return mRealm.where(GameRealmObject.class).findAll();
     }
 
     @Override
-    public void addGame(Game game) {
+    public void addGameRealmObject(GameRealmObject gameRealmObject) {
         mRealm.beginTransaction();
-        mRealm.copyToRealmOrUpdate(game);
+        mRealm.copyToRealmOrUpdate(gameRealmObject);
         mRealm.commitTransaction();
     }
 
     @Override
-    public void deleteAllGames() {
-        RealmResults<Game> games = mRealm.where(Game.class).findAll();
+    public void deleteAllGameRealmObjects() {
+        RealmResults<GameRealmObject> games = mRealm.where(GameRealmObject.class).findAll();
         mRealm.beginTransaction();
         games.clear();
         mRealm.commitTransaction();
     }
 
     @Override
-    public String getPlayerName(String playerId) {
-        return mRealm.where(Player.class).equalTo("playerId", playerId).findFirst().getPlayerName();
+    public void deleteGameRealmObject(GameRealmObject gameRealmObject) {
+        mRealm.beginTransaction();
+        gameRealmObject.removeFromRealm();
+        mRealm.commitTransaction();
     }
 }
