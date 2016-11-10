@@ -12,6 +12,11 @@
         android:layout_weight="1"
         android:text="index" />
 
+    <View
+        android:layout_width="1dp"
+        android:layout_height="fill_parent"
+        android:background="@color/colorLightGray" />
+
     <TextView
         android:id="@+id/tvResult1"
         style="@style/fragmentTableResult_textView_result"

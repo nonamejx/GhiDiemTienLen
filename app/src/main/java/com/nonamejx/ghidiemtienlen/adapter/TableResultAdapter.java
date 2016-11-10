@@ -10,12 +10,15 @@ import android.widget.TextView;
 import com.nonamejx.ghidiemtienlen.R;
 import com.nonamejx.ghidiemtienlen.common.Constants;
 import com.nonamejx.ghidiemtienlen.model.Game;
+import com.nonamejx.ghidiemtienlen.utils.MyUtils;
 
 /**
  * Created by noname
  * on 10/11/2016.
  */
-public class TableResultAdapter extends RecyclerView.Adapter<TableResultAdapter.TableResultViewHolder> {
+public class TableResultAdapter extends RecyclerView.Adapter<TableResultAdapter.TurnDetailResultViewHolder> {
+    private static final int TYPE_DETAIL_RESULT = 0;
+    private static final int TYPE_FINAL_RESULT = 1;
     private final Context mContext;
     private final Game mGame;
 
@@ -25,28 +28,58 @@ public class TableResultAdapter extends RecyclerView.Adapter<TableResultAdapter.
     }
 
     @Override
-    public TableResultViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(mContext).inflate(R.layout.item_list_table_results, parent, false);
-        return new TableResultViewHolder((v));
+    public TurnDetailResultViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (viewType == TYPE_DETAIL_RESULT) {
+            View v = LayoutInflater.from(mContext).inflate(R.layout.item_list_table_results, parent, false);
+            return new TurnDetailResultViewHolder((v));
+        } else if (viewType == TYPE_FINAL_RESULT) {
+            View v = LayoutInflater.from(mContext).inflate(R.layout.item_table_result_final_result, parent, false);
+            return new TurnDetailResultViewHolder((v));
+        }
+        return null;
     }
 
     @Override
-    public void onBindViewHolder(TableResultViewHolder holder, int position) {
-        for (int i = 0; i < Constants.NUMBER_OF_PLAYERS; i++) {
-            holder.tvResults[i].setText(mGame.getResult()[position][i] + "");
+    public void onBindViewHolder(TurnDetailResultViewHolder holder, int position) {
+        if (getItemViewType(position) == TYPE_DETAIL_RESULT) {
+            for (int i = 0; i < Constants.NUMBER_OF_PLAYERS; i++) {
+                holder.tvResults[i].setText(mGame.getResult()[position][i] + "");
+            }
+            holder.tvResults[4].setText(position + 1 + "");
+        } else {
+            for (int i = 0; i < Constants.NUMBER_OF_PLAYERS; i++) {
+                int[] finalResult = mGame.calculateFinalResult();
+                holder.tvResults[i].setText(finalResult[i] + "");
+            }
+
+            // change color
+            int[] minPos = MyUtils.getMinPositions(mGame.calculateFinalResult());
+            int[] maxPos = MyUtils.getMaxPositions(mGame.calculateFinalResult());
+            for (int i = 0; i < Constants.NUMBER_OF_PLAYERS; i++) {
+                if (minPos[i] > -1) {
+                    holder.tvResults[i].setBackgroundResource(R.drawable.shape_red_background);
+                }
+                if (maxPos[i] > -1) {
+                    holder.tvResults[i].setBackgroundResource(R.drawable.shape_green_background);
+                }
+            }
         }
-        holder.tvResults[4].setText(position + 1 + "");
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position == mGame.getNumberOfTurns() ? TYPE_FINAL_RESULT : TYPE_DETAIL_RESULT;
     }
 
     @Override
     public int getItemCount() {
-        return mGame.getNumberOfTurns();
+        return mGame.getNumberOfTurns() + 1;
     }
 
-    class TableResultViewHolder extends RecyclerView.ViewHolder {
+    class TurnDetailResultViewHolder extends RecyclerView.ViewHolder {
         final TextView[] tvResults;
 
-        public TableResultViewHolder(View itemView) {
+        public TurnDetailResultViewHolder(View itemView) {
             super(itemView);
             tvResults = new TextView[5];
             tvResults[0] = (TextView) itemView.findViewById(R.id.tvResult1);

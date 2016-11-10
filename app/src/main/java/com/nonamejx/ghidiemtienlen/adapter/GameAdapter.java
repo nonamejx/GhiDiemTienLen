@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.nonamejx.ghidiemtienlen.R;
 import com.nonamejx.ghidiemtienlen.common.Constants;
 import com.nonamejx.ghidiemtienlen.model.Game;
+import com.nonamejx.ghidiemtienlen.utils.MyUtils;
 
 import java.util.List;
 
@@ -41,8 +42,8 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
         }
 
         // change color
-        int[] minPos = mGames.get(position).getMinResultPositions();
-        int[] maxPos = mGames.get(position).getMaxResultPositions();
+        int[] minPos = MyUtils.getMinPositions(mGames.get(position).calculateFinalResult());
+        int[] maxPos = MyUtils.getMaxPositions(mGames.get(position).calculateFinalResult());
         for (int i = 0; i < Constants.NUMBER_OF_PLAYERS; i++) {
             if (minPos[i] > -1) {
                 holder.tvResults[i].setBackgroundResource(R.drawable.shape_red_background);

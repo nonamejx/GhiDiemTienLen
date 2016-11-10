@@ -31,10 +31,6 @@ public class Game {
     @Setter
     private int[][] result;
 
-    private int[] minResultPositions = {-1, -1, -1, -1};
-
-    private int[] maxResultPositions = {-1, -1, -1, -1};
-
     public Game(int numberOfTurns) {
         this.gameId = UUID.randomUUID().toString();
         this.numberOfPlayers = Constants.NUMBER_OF_PLAYERS;
@@ -63,37 +59,4 @@ public class Game {
     public GameRealmObject toGameRealmObject() {
         return new GameRealmObject(this);
     }
-
-    public int[] getMinResultPositions() {
-        final int[] finalResult = calculateFinalResult();
-        int minVal = finalResult[0];
-        for (int i = 1; i < Constants.NUMBER_OF_PLAYERS; i++) {
-            if (finalResult[i] < minVal) {
-                minVal = finalResult[i];
-            }
-        }
-        for (int i = 0; i < Constants.NUMBER_OF_PLAYERS; i++) {
-            if (finalResult[i] == minVal) {
-                minResultPositions[i] = i;
-            }
-        }
-        return minResultPositions;
-    }
-
-    public int[] getMaxResultPositions() {
-        final int[] finalResult = calculateFinalResult();
-        int maxVal = finalResult[0];
-        for (int i = 1; i < Constants.NUMBER_OF_PLAYERS; i++) {
-            if (finalResult[i] > maxVal) {
-                maxVal = finalResult[i];
-            }
-        }
-        for (int i = 0; i < Constants.NUMBER_OF_PLAYERS; i++) {
-            if (finalResult[i] == maxVal) {
-                maxResultPositions[i] = i;
-            }
-        }
-        return maxResultPositions;
-    }
-
 }

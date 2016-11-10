@@ -1,5 +1,6 @@
 package com.nonamejx.ghidiemtienlen.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,8 +13,11 @@ import android.widget.Button;
 
 import com.nonamejx.ghidiemtienlen.R;
 import com.nonamejx.ghidiemtienlen.activity.MainActivity;
+import com.nonamejx.ghidiemtienlen.activity.ResultActivity_;
 import com.nonamejx.ghidiemtienlen.adapter.GameAdapter;
+import com.nonamejx.ghidiemtienlen.common.Constants;
 import com.nonamejx.ghidiemtienlen.common.DividerItemDecoration;
+import com.nonamejx.ghidiemtienlen.common.RecyclerTouchListener;
 import com.nonamejx.ghidiemtienlen.database.DataCenter;
 import com.nonamejx.ghidiemtienlen.model.Game;
 
@@ -47,6 +51,19 @@ public class GameFragment extends Fragment {
         mRecyclerViewGames.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerViewGames.setAdapter(new GameAdapter(getContext(), DataCenter.getInstance().getAllGames()));
         mRecyclerViewGames.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
+        mRecyclerViewGames.addOnItemTouchListener(new RecyclerTouchListener(getContext(), mRecyclerViewGames, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Intent i = new Intent(getContext(), ResultActivity_.class);
+                i.putExtra(Constants.INTENT_KEY_GAME_ID, DataCenter.getInstance().getAllGames().get(position).getGameId());
+                startActivity(i);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
         Button btnNewGame = (Button) v.findViewById(R.id.btnNewGame);
         btnNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,9 +91,7 @@ public class GameFragment extends Fragment {
             Game game = new Game(players, numberOfTurns);
             game.setResult(result);
 
-
             DataCenter.getInstance().addGame(game);
-
         }
     }
 }
