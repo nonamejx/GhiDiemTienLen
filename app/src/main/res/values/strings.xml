@@ -18,4 +18,7 @@
     <string name="btnOK">OK</string>
     <string name="btnCancel">Cancel</string>
     <string name="confirm_exit_tracking">Van bai chua xong!\nBan co thuc su muon thoat?</string>
+    <string name="end_game_message">Van bai da ket thuc!</string>
+    <string name="btnEndGame">Xem ket qua</string>
+    <string name="end_game_title_dialog">Ket thuc</string>
 </resources>

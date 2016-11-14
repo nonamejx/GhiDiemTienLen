@@ -32,8 +32,7 @@
                 android:id="@+id/tvResult1"
                 style="@style/fragmentTableResult_textView_finalResult"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="abc" />
+                android:layout_height="wrap_content" />
 
         </RelativeLayout>
 
@@ -54,8 +53,7 @@
                 android:id="@+id/tvResult2"
                 style="@style/fragmentTableResult_textView_finalResult"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="abc" />
+                android:layout_height="wrap_content" />
 
         </RelativeLayout>
 
@@ -75,8 +73,7 @@
                 android:id="@+id/tvResult3"
                 style="@style/fragmentTableResult_textView_finalResult"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="abc" />
+                android:layout_height="wrap_content" />
 
         </RelativeLayout>
 
@@ -96,14 +93,14 @@
                 android:id="@+id/tvResult4"
                 style="@style/fragmentTableResult_textView_finalResult"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="abc" />
+                android:layout_height="wrap_content" />
 
         </RelativeLayout>
 
     </LinearLayout>
 
     <Button
+        android:id="@+id/btnBack"
         style="@style/fragmentNewGame_textView_playerNameSettingTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

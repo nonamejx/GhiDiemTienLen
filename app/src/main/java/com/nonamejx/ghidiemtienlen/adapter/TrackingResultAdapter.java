@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.nonamejx.ghidiemtienlen.R;
 import com.nonamejx.ghidiemtienlen.common.Constants;
 import com.nonamejx.ghidiemtienlen.model.Game;
+import com.nonamejx.ghidiemtienlen.prefs.Setting;
+import com.nonamejx.ghidiemtienlen.prefs.SharedPrefsManager;
 
 /**
  * Created by noname
@@ -38,7 +40,9 @@ public class TrackingResultAdapter extends RecyclerView.Adapter<TrackingResultAd
         for (int i = 0; i < Constants.NUMBER_OF_PLAYERS; i++) {
             holder.tvResults[i].setText(String.valueOf(mGame.getResult()[position][i]));
         }
-        holder.tvResults[4].setText(String.valueOf(position + 1));
+        if (SharedPrefsManager.getInstance(mContext).getSetting(Setting.SHOW_NUMBER_OF_TURNS)){
+            holder.tvResults[4].setText(String.valueOf(position + 1));
+        }
     }
 
     @Override

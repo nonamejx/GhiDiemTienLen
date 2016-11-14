@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nonamejx.ghidiemtienlen.R;
@@ -15,9 +16,14 @@ import com.nonamejx.ghidiemtienlen.common.Constants;
 import com.nonamejx.ghidiemtienlen.common.DividerItemDecoration;
 import com.nonamejx.ghidiemtienlen.common.RecyclerTouchListener;
 import com.nonamejx.ghidiemtienlen.common.TurnResultDialogListener;
+import com.nonamejx.ghidiemtienlen.database.DataCenter;
+import com.nonamejx.ghidiemtienlen.fragment.dialog.ConfirmEndGameDialog;
 import com.nonamejx.ghidiemtienlen.fragment.dialog.ConfirmExitDialog;
 import com.nonamejx.ghidiemtienlen.fragment.dialog.TurnResultDialog;
 import com.nonamejx.ghidiemtienlen.model.Game;
+import com.nonamejx.ghidiemtienlen.prefs.Setting;
+import com.nonamejx.ghidiemtienlen.prefs.SharedPrefsManager;
+import com.nonamejx.ghidiemtienlen.utils.MyUtils;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -38,10 +44,13 @@ public class TrackingActivity extends AppCompatActivity implements TurnResultDia
     TextView tvPlayer3;
     @ViewById(R.id.tvPlayer4)
     TextView tvPlayer4;
+    @ViewById(R.id.llResult)
+    LinearLayout llResult;
     @ViewById(R.id.btnAddTurnResult)
     FloatingActionButton btnAddTurnResult;
     @ViewById(R.id.recyclerViewTrackingResult)
     RecyclerView recyclerViewTrackingResult;
+    TextView[] tvFinalResults;
 
     TrackingResultAdapter adapter;
 
@@ -55,6 +64,12 @@ public class TrackingActivity extends AppCompatActivity implements TurnResultDia
         tvPlayer2.setText(game.getPlayerNames()[1]);
         tvPlayer3.setText(game.getPlayerNames()[2]);
         tvPlayer4.setText(game.getPlayerNames()[3]);
+
+        tvFinalResults = new TextView[4];
+        tvFinalResults[0] = (TextView) findViewById(R.id.tvResult1);
+        tvFinalResults[1] = (TextView) findViewById(R.id.tvResult2);
+        tvFinalResults[2] = (TextView) findViewById(R.id.tvResult3);
+        tvFinalResults[3] = (TextView) findViewById(R.id.tvResult4);
 
         recyclerViewTrackingResult.setLayoutManager(new LinearLayoutManager(this));
         adapter = new TrackingResultAdapter(this, currentTurn, game);
@@ -70,6 +85,38 @@ public class TrackingActivity extends AppCompatActivity implements TurnResultDia
             public void onLongClick(View view, int position) {
             }
         }));
+    }
+
+    private void updateFinalResult() {
+        if (SharedPrefsManager.getInstance(this).getSetting(Setting.SHOW_CURRENT_RESULT)) {
+            llResult.setVisibility(View.VISIBLE);
+            int[] finalResult = game.calculateFinalResult();
+            for (int i = 0; i < Constants.NUMBER_OF_PLAYERS; i++) {
+                tvFinalResults[i].setText(String.valueOf(finalResult[i]));
+            }
+
+            // change color
+            if (currentTurn >= 0) {
+                // clear background
+                for (TextView tvFinalResult : tvFinalResults) {
+                    tvFinalResult.setBackgroundColor(0);
+                    tvFinalResult.setTextColor(getResources().getColor(R.color.black));
+                }
+
+                int[] minPos = MyUtils.getMinPositions(game.calculateFinalResult());
+                int[] maxPos = MyUtils.getMaxPositions(game.calculateFinalResult());
+                for (int i = 0; i < Constants.NUMBER_OF_PLAYERS; i++) {
+                    if (minPos[i] > -1) {
+                        tvFinalResults[i].setBackgroundResource(R.drawable.shape_red_background);
+                        tvFinalResults[i].setTextColor(getResources().getColor(R.color.white));
+                    }
+                    if (maxPos[i] > -1) {
+                        tvFinalResults[i].setBackgroundResource(R.drawable.shape_green_background);
+                        tvFinalResults[i].setTextColor(getResources().getColor(R.color.white));
+                    }
+                }
+            }
+        }
     }
 
     private void updateRecyclerView() {
@@ -116,6 +163,15 @@ public class TrackingActivity extends AppCompatActivity implements TurnResultDia
             // add result
             addResult(turnResult);
             updateRecyclerView();
+        }
+        updateFinalResult();
+
+        // check is end game
+        if ((turnResultPosition + 1) == game.getNumberOfTurns()) {
+            // add to database
+            DataCenter.getInstance().addGame(game);
+            // show confirm dialog
+            ConfirmEndGameDialog.newInstance(game.getGameId()).show(getSupportFragmentManager(), "title");
         }
     }
 }

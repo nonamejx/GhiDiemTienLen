@@ -23,6 +23,7 @@ import com.nonamejx.ghidiemtienlen.model.Game;
 
 import org.androidannotations.annotations.EFragment;
 
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -32,6 +33,9 @@ import java.util.Random;
 @EFragment
 public class GameFragment extends Fragment {
 
+    private List<Game> mGames;
+    private GameAdapter mAdapter;
+
     public static GameFragment newInstance() {
         return GameFragment_.builder().build();
     }
@@ -39,8 +43,20 @@ public class GameFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mGames = DataCenter.getInstance().getAllGames();
+        mAdapter = new GameAdapter(getContext(), mGames);
         // create sample data
         // createSampleData();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mGames = DataCenter.getInstance().getAllGames();
+        if (mAdapter != null) {
+            mAdapter.notifyDataSetChanged();
+        }
+
     }
 
     @Nullable
@@ -49,7 +65,7 @@ public class GameFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_game, container, false);
         RecyclerView mRecyclerViewGames = (RecyclerView) v.findViewById(R.id.recyclerViewGames);
         mRecyclerViewGames.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerViewGames.setAdapter(new GameAdapter(getContext(), DataCenter.getInstance().getAllGames()));
+        mRecyclerViewGames.setAdapter(mAdapter);
         mRecyclerViewGames.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
         mRecyclerViewGames.addOnItemTouchListener(new RecyclerTouchListener(getContext(), mRecyclerViewGames, new RecyclerTouchListener.ClickListener() {
             @Override

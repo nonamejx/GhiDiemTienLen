@@ -47,7 +47,7 @@ public class TableResultFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_table_result, container, false);
         RecyclerView mRecyclerViewTableResult = (RecyclerView) v.findViewById(R.id.recyclerViewTableResult);
         mRecyclerViewTableResult.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerViewTableResult.setAdapter(new TableResultAdapter(getContext(), mGame));
+        mRecyclerViewTableResult.setAdapter(new TableResultAdapter(getActivity(), mGame));
         mRecyclerViewTableResult.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
 
         TextView[] tvPlayers = new TextView[4];

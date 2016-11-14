@@ -38,7 +38,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
         cleanBackground(holder.tvResults);
         for (int i = 0; i < Constants.NUMBER_OF_PLAYERS; i++) {
             holder.tvPlayers[i].setText(mGames.get(position).getPlayerNames()[i]);
-            holder.tvResults[i].setText(mGames.get(position).calculateFinalResult()[i] + "");
+            holder.tvResults[i].setText(String.valueOf(mGames.get(position).calculateFinalResult()[i]));
         }
 
         // change color

@@ -5,9 +5,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.nonamejx.ghidiemtienlen.R;
+import com.nonamejx.ghidiemtienlen.activity.ResultActivity_;
 import com.nonamejx.ghidiemtienlen.common.Constants;
 import com.nonamejx.ghidiemtienlen.model.Game;
 import com.nonamejx.ghidiemtienlen.utils.MyUtils;
@@ -80,6 +82,7 @@ public class TableResultAdapter extends RecyclerView.Adapter<TableResultAdapter.
 
     class TurnDetailResultViewHolder extends RecyclerView.ViewHolder {
         final TextView[] tvResults;
+        final Button btnBack;
 
         public TurnDetailResultViewHolder(View itemView) {
             super(itemView);
@@ -89,6 +92,15 @@ public class TableResultAdapter extends RecyclerView.Adapter<TableResultAdapter.
             tvResults[2] = (TextView) itemView.findViewById(R.id.tvResult3);
             tvResults[3] = (TextView) itemView.findViewById(R.id.tvResult4);
             tvResults[4] = (TextView) itemView.findViewById(R.id.tvIndex);
+            btnBack = (Button) itemView.findViewById(R.id.btnBack);
+            if (btnBack != null) {
+                btnBack.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ((ResultActivity_) mContext).finish();
+                    }
+                });
+            }
         }
     }
 }

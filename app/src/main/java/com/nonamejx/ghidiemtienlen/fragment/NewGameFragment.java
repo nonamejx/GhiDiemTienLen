@@ -8,12 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import com.nonamejx.ghidiemtienlen.R;
 import com.nonamejx.ghidiemtienlen.activity.TrackingActivity_;
 import com.nonamejx.ghidiemtienlen.common.Constants;
 import com.nonamejx.ghidiemtienlen.model.Game;
+import com.nonamejx.ghidiemtienlen.prefs.Setting;
+import com.nonamejx.ghidiemtienlen.prefs.SharedPrefsManager;
 
 import org.androidannotations.annotations.EFragment;
 
@@ -43,6 +47,20 @@ public class NewGameFragment extends Fragment {
         editTexts[2] = (EditText) v.findViewById(R.id.edtPlayer3);
         editTexts[3] = (EditText) v.findViewById(R.id.edtPlayer4);
         editTexts[4] = (EditText) v.findViewById(R.id.edtNumberOfTurns);
+        CheckBox cbHideCurrentTurns = (CheckBox) v.findViewById(R.id.cbHideCurrentTurns);
+        cbHideCurrentTurns.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                SharedPrefsManager.getInstance(getContext()).setupSetting(Setting.SHOW_NUMBER_OF_TURNS, !b);
+            }
+        });
+        CheckBox cbHideCurrentScore = (CheckBox) v.findViewById(R.id.cbHideCurrentScore);
+        cbHideCurrentScore.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                SharedPrefsManager.getInstance(getContext()).setupSetting(Setting.SHOW_CURRENT_RESULT, !b);
+            }
+        });
         Button btnStartGame = (Button) v.findViewById(R.id.btnStartGame);
         btnStartGame.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +81,7 @@ public class NewGameFragment extends Fragment {
                 for (int j = 0; j < Constants.NUMBER_OF_PLAYERS; j++) {
                     editTexts[j].setText("");
                 }
-                editTexts[4].setText("10");
+                editTexts[4].setText(String.valueOf(10));
             }
         });
         return v;

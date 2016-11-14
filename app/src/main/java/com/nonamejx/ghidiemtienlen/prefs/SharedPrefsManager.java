@@ -46,9 +46,9 @@ public class SharedPrefsManager {
     public boolean getSetting(String setting) {
         switch (setting) {
             case Setting.SHOW_CURRENT_RESULT:
-                return mPrefs.getBoolean(Setting.SHOW_CURRENT_RESULT, false);
+                return mPrefs.getBoolean(Setting.SHOW_CURRENT_RESULT, true);
             case Setting.SHOW_NUMBER_OF_TURNS:
-                return mPrefs.getBoolean(Setting.SHOW_NUMBER_OF_TURNS, false);
+                return mPrefs.getBoolean(Setting.SHOW_NUMBER_OF_TURNS, true);
             default:
                 return false;
         }

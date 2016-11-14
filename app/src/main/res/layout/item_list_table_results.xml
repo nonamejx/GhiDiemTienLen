@@ -9,8 +9,7 @@
         style="@style/fragmentTableResult_textView_result"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="index" />
+        android:layout_weight="1" />
 
     <View
         android:layout_width="1dp"
@@ -22,31 +21,27 @@
         style="@style/fragmentTableResult_textView_result"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="abc" />
+        android:layout_weight="1" />
 
     <TextView
         android:id="@+id/tvResult2"
         style="@style/fragmentTableResult_textView_result"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="abc" />
+        android:layout_weight="1" />
 
     <TextView
         android:id="@+id/tvResult3"
         style="@style/fragmentTableResult_textView_result"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="abc" />
+        android:layout_weight="1" />
 
     <TextView
         android:id="@+id/tvResult4"
         style="@style/fragmentTableResult_textView_result"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="abc" />
+        android:layout_weight="1" />
 
 </LinearLayout>
