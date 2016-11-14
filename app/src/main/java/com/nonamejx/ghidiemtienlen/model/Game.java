@@ -2,6 +2,7 @@ package com.nonamejx.ghidiemtienlen.model;
 
 import com.nonamejx.ghidiemtienlen.common.Constants;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 import lombok.Getter;
@@ -11,7 +12,7 @@ import lombok.Setter;
  * Created by noname
  * on 22/10/2016.
  */
-public class Game {
+public class Game implements Serializable {
     @Getter
     private String gameId;
 

@@ -8,4 +8,7 @@
     <dimen name="medium_padding">16dp</dimen>
     <dimen name="medium_textSize">24dp</dimen>
     <dimen name="default_textSize">12dp</dimen>
+    <dimen name="title_setting_textSize">20dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="title_textSize">16dp</dimen>
 </resources>

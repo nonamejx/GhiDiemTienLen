@@ -2,98 +2,113 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tvIndex"
-        style="@style/fragmentTableResult_textView_playerName"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1" />
-
-    <View
-        android:layout_width="1dp"
-        android:layout_height="fill_parent"
-        android:background="@color/colorLightGray" />
-
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:padding="@dimen/default_padding">
+        android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/tvResult1"
-            style="@style/fragmentTableResult_textView_playerName"
-            android:layout_width="wrap_content"
+            android:id="@+id/tvIndex"
+            style="@style/fragmentTableResult_textView_finalResult"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="abc" />
+            android:layout_weight="1" />
 
-    </RelativeLayout>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:background="@color/colorLightGray" />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/default_padding">
+
+            <TextView
+                android:id="@+id/tvResult1"
+                style="@style/fragmentTableResult_textView_finalResult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="abc" />
+
+        </RelativeLayout>
 
 
-    <View
-        android:layout_width="1dp"
-        android:layout_height="fill_parent"
-        android:background="@color/colorLightGray" />
+        <View
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:background="@color/colorLightGray" />
 
-    <RelativeLayout
-        android:layout_width="0dp"
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/default_padding">
+
+            <TextView
+                android:id="@+id/tvResult2"
+                style="@style/fragmentTableResult_textView_finalResult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="abc" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:background="@color/colorLightGray" />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/default_padding">
+
+            <TextView
+                android:id="@+id/tvResult3"
+                style="@style/fragmentTableResult_textView_finalResult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="abc" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:background="@color/colorLightGray" />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/default_padding">
+
+            <TextView
+                android:id="@+id/tvResult4"
+                style="@style/fragmentTableResult_textView_finalResult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="abc" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <Button
+        style="@style/fragmentNewGame_textView_playerNameSettingTitle"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:padding="@dimen/default_padding">
-
-        <TextView
-            android:id="@+id/tvResult2"
-            style="@style/fragmentTableResult_textView_playerName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="abc" />
-
-    </RelativeLayout>
-
-    <View
-        android:layout_width="1dp"
-        android:layout_height="fill_parent"
-        android:background="@color/colorLightGray" />
-
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:padding="@dimen/default_padding">
-
-        <TextView
-            android:id="@+id/tvResult3"
-            style="@style/fragmentTableResult_textView_playerName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="abc" />
-
-    </RelativeLayout>
-
-    <View
-        android:layout_width="1dp"
-        android:layout_height="fill_parent"
-        android:background="@color/colorLightGray" />
-
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:padding="@dimen/default_padding">
-
-        <TextView
-            android:id="@+id/tvResult4"
-            style="@style/fragmentTableResult_textView_playerName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="abc" />
-
-    </RelativeLayout>
+        android:drawableLeft="@drawable/ic_left_arrow"
+        android:text="@string/back"
+        android:textAllCaps="false" />
 
 </LinearLayout>

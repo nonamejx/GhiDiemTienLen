@@ -7,4 +7,5 @@ package com.nonamejx.ghidiemtienlen.common;
 public interface Constants {
     int NUMBER_OF_PLAYERS = 4;
     String INTENT_KEY_GAME_ID = "GAME_ID";
+    String INTENT_KEY_GAME_OBJECT = "GAME_OBJECT";
 }

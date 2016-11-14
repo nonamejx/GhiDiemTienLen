@@ -1,13 +1,19 @@
 package com.nonamejx.ghidiemtienlen.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.nonamejx.ghidiemtienlen.R;
+import com.nonamejx.ghidiemtienlen.activity.TrackingActivity_;
+import com.nonamejx.ghidiemtienlen.common.Constants;
+import com.nonamejx.ghidiemtienlen.model.Game;
 
 import org.androidannotations.annotations.EFragment;
 
@@ -31,6 +37,35 @@ public class NewGameFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_new_game, container, false);
+        final EditText[] editTexts = new EditText[5];
+        editTexts[0] = (EditText) v.findViewById(R.id.edtPlayer1);
+        editTexts[1] = (EditText) v.findViewById(R.id.edtPlayer2);
+        editTexts[2] = (EditText) v.findViewById(R.id.edtPlayer3);
+        editTexts[3] = (EditText) v.findViewById(R.id.edtPlayer4);
+        editTexts[4] = (EditText) v.findViewById(R.id.edtNumberOfTurns);
+        Button btnStartGame = (Button) v.findViewById(R.id.btnStartGame);
+        btnStartGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String[] players = new String[4];
+                for (int i = 0; i < Constants.NUMBER_OF_PLAYERS; i++) {
+                    players[i] = editTexts[i].getText().toString();
+                }
+                int numberOfTurns = Integer.parseInt(editTexts[4].getText().toString());
+                Game game = new Game(players, numberOfTurns);
+                Intent i = new Intent(getContext(), TrackingActivity_.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Constants.INTENT_KEY_GAME_OBJECT, game);
+                i.putExtras(bundle);
+                startActivity(i);
+
+                // clean data
+                for (int j = 0; j < Constants.NUMBER_OF_PLAYERS; j++) {
+                    editTexts[j].setText("");
+                }
+                editTexts[4].setText("10");
+            }
+        });
         return v;
     }
 }

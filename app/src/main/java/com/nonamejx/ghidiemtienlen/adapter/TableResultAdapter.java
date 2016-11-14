@@ -58,9 +58,11 @@ public class TableResultAdapter extends RecyclerView.Adapter<TableResultAdapter.
             for (int i = 0; i < Constants.NUMBER_OF_PLAYERS; i++) {
                 if (minPos[i] > -1) {
                     holder.tvResults[i].setBackgroundResource(R.drawable.shape_red_background);
+                    holder.tvResults[i].setTextColor(mContext.getResources().getColor(R.color.white));
                 }
                 if (maxPos[i] > -1) {
                     holder.tvResults[i].setBackgroundResource(R.drawable.shape_green_background);
+                    holder.tvResults[i].setTextColor(mContext.getResources().getColor(R.color.white));
                 }
             }
         }
