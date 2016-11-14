@@ -78,7 +78,7 @@ public class TrackingActivity extends AppCompatActivity implements TurnResultDia
         recyclerViewTrackingResult.addOnItemTouchListener(new RecyclerTouchListener(this, recyclerViewTrackingResult, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                TurnResultDialog.newInstance(game.getPlayerNames(), game.getResult()[position], position).show(getSupportFragmentManager(), "Title");
+                TurnResultDialog.newInstance(getResources().getString(R.string.update_score), game.getPlayerNames(), game.getResult()[position], position).show(getSupportFragmentManager(), "Title");
             }
 
             @Override
@@ -141,7 +141,7 @@ public class TrackingActivity extends AppCompatActivity implements TurnResultDia
     @Click(R.id.btnAddTurnResult)
     void addTurnResultClick() {
         // show dialog
-        TurnResultDialog.newInstance(game.getPlayerNames(), null, currentTurn).show(getSupportFragmentManager(), "Title");
+        TurnResultDialog.newInstance(getResources().getString(R.string.add_score), game.getPlayerNames(), null, currentTurn).show(getSupportFragmentManager(), "Title");
     }
 
     @Override

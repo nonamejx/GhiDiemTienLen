@@ -53,4 +53,9 @@ public class RealmHelper implements IDatabaseManagement {
         gameRealmObject.removeFromRealm();
         mRealm.commitTransaction();
     }
+
+    @Override
+    public GameRealmObject getGame(String gameId) {
+        return mRealm.where(GameRealmObject.class).equalTo("gameId", gameId).findFirst();
+    }
 }

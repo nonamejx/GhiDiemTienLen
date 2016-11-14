@@ -13,4 +13,5 @@ public interface IDataCenter {
     Game getGame(String gameId);
     void addGame(Game game);
     void deleteGame(Game game);
+    void deleteAllGames();
 }

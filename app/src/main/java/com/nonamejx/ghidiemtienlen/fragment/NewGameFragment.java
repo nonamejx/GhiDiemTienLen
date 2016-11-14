@@ -37,6 +37,40 @@ public class NewGameFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        SharedPrefsManager.getInstance(getContext()).setupSetting(Setting.SHOW_CURRENT_RESULT, true);
+        SharedPrefsManager.getInstance(getContext()).setupSetting(Setting.SHOW_NUMBER_OF_TURNS, true);
+    }
+
+    private boolean validate(EditText[] editTexts) {
+        boolean isOK = true;
+        // validate players name
+        for (int i = 0; i < 4; i++) {
+            if (editTexts[i].getText().toString().length() == 0) {
+                editTexts[i].setError(getResources().getString(R.string.validate_empty_string));
+                isOK = false;
+            } else if (editTexts[i].getText().toString().length() > 8) {
+                editTexts[i].setError(getResources().getString(R.string.validate_players_name_message));
+                isOK = false;
+            }
+        }
+
+        // validate number of turns
+        if (editTexts[4].getText().toString().length() == 0) {
+            editTexts[4].setError(getResources().getString(R.string.validate_empty_string));
+            isOK = false;
+        } else {
+            int n = Integer.parseInt(editTexts[4].getText().toString());
+            if (n == 0) {
+                editTexts[4].setError(getResources().getString(R.string.validate_number_of_turn_is_zero));
+                isOK = false;
+            }
+        }
+        return isOK;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -65,23 +99,25 @@ public class NewGameFragment extends Fragment {
         btnStartGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String[] players = new String[4];
-                for (int i = 0; i < Constants.NUMBER_OF_PLAYERS; i++) {
-                    players[i] = editTexts[i].getText().toString();
-                }
-                int numberOfTurns = Integer.parseInt(editTexts[4].getText().toString());
-                Game game = new Game(players, numberOfTurns);
-                Intent i = new Intent(getContext(), TrackingActivity_.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(Constants.INTENT_KEY_GAME_OBJECT, game);
-                i.putExtras(bundle);
-                startActivity(i);
+                if (validate(editTexts)) {
+                    String[] players = new String[4];
+                    for (int i = 0; i < Constants.NUMBER_OF_PLAYERS; i++) {
+                        players[i] = editTexts[i].getText().toString();
+                    }
+                    int numberOfTurns = Integer.parseInt(editTexts[4].getText().toString());
+                    Game game = new Game(players, numberOfTurns);
+                    Intent i = new Intent(getContext(), TrackingActivity_.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(Constants.INTENT_KEY_GAME_OBJECT, game);
+                    i.putExtras(bundle);
+                    startActivity(i);
 
-                // clean data
-                for (int j = 0; j < Constants.NUMBER_OF_PLAYERS; j++) {
-                    editTexts[j].setText("");
+                    // clean data
+                    for (int j = 0; j < Constants.NUMBER_OF_PLAYERS; j++) {
+                        editTexts[j].setText("");
+                    }
+                    editTexts[4].setText(String.valueOf(10));
                 }
-                editTexts[4].setText(String.valueOf(10));
             }
         });
         return v;

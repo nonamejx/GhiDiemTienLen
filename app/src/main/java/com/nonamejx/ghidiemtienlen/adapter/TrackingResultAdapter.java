@@ -40,7 +40,7 @@ public class TrackingResultAdapter extends RecyclerView.Adapter<TrackingResultAd
         for (int i = 0; i < Constants.NUMBER_OF_PLAYERS; i++) {
             holder.tvResults[i].setText(String.valueOf(mGame.getResult()[position][i]));
         }
-        if (SharedPrefsManager.getInstance(mContext).getSetting(Setting.SHOW_NUMBER_OF_TURNS)){
+        if (SharedPrefsManager.getInstance(mContext).getSetting(Setting.SHOW_NUMBER_OF_TURNS)) {
             holder.tvResults[4].setText(String.valueOf(position + 1));
         }
     }

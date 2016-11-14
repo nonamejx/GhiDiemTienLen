@@ -27,7 +27,7 @@ public class DataCenter implements IDataCenter {
 
     private List<Game> convert(List<GameRealmObject> gameRealmObjects) {
         List<Game> games = new ArrayList<>();
-        for(GameRealmObject gameRealmObject : gameRealmObjects) {
+        for (GameRealmObject gameRealmObject : gameRealmObjects) {
             games.add(gameRealmObject.toGame());
         }
         return games;
@@ -57,6 +57,12 @@ public class DataCenter implements IDataCenter {
     @Override
     public void deleteGame(Game game) {
         this.games.remove(game);
-        RealmHelper.getInstance().deleteGameRealmObject(game.toGameRealmObject());
+        RealmHelper.getInstance().deleteGameRealmObject(RealmHelper.getInstance().getGame(game.getGameId()));
+    }
+
+    @Override
+    public void deleteAllGames() {
+        this.games.clear();
+        RealmHelper.getInstance().deleteAllGameRealmObjects();
     }
 }

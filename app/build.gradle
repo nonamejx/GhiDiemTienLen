@@ -36,4 +36,5 @@ dependencies {
     compile "org.androidannotations:androidannotations-api:$AAVersion"
     compile 'com.android.support:design:24.0.0'
     compile 'com.shawnlin:number-picker:2.2.0'
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.0'
 }

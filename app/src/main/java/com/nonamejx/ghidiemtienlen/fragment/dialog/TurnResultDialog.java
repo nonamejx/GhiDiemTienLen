@@ -26,12 +26,16 @@ import org.androidannotations.annotations.ViewById;
 @EFragment(R.layout.dialog_add_turn_result)
 public class TurnResultDialog extends DialogFragment {
     @FragmentArg
+    String dialogTitle;
+    @FragmentArg
     String[] players;
     @FragmentArg
     int[] result;
     @FragmentArg
     int turnResultPosition;
 
+    @ViewById(R.id.tvConfirmTitle)
+    TextView tvConfirmTitle;
     @ViewById(R.id.tvPlayer1)
     TextView tvPlayer1;
     @ViewById(R.id.tvPlayer2)
@@ -51,12 +55,13 @@ public class TurnResultDialog extends DialogFragment {
     @ViewById(R.id.numberPicker4)
     NumberPicker numberPicker4;
 
-    public static TurnResultDialog newInstance(String[] players, int[] result, int turnResultPosition) {
-        return TurnResultDialog_.builder().players(players).result(result).turnResultPosition(turnResultPosition).build();
+    public static TurnResultDialog newInstance(String title, String[] players, int[] result, int turnResultPosition) {
+        return TurnResultDialog_.builder().dialogTitle(title).players(players).result(result).turnResultPosition(turnResultPosition).build();
     }
 
     @AfterViews
     void afterViews() {
+        tvConfirmTitle.setText(dialogTitle);
         tvPlayer1.setText(players[0]);
         tvPlayer2.setText(players[1]);
         tvPlayer3.setText(players[2]);

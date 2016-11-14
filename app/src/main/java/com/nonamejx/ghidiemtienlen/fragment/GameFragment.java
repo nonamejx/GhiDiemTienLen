@@ -19,6 +19,7 @@ import com.nonamejx.ghidiemtienlen.common.Constants;
 import com.nonamejx.ghidiemtienlen.common.DividerItemDecoration;
 import com.nonamejx.ghidiemtienlen.common.RecyclerTouchListener;
 import com.nonamejx.ghidiemtienlen.database.DataCenter;
+import com.nonamejx.ghidiemtienlen.fragment.dialog.ConfirmDeleteGameDialog;
 import com.nonamejx.ghidiemtienlen.model.Game;
 
 import org.androidannotations.annotations.EFragment;
@@ -32,7 +33,6 @@ import java.util.Random;
  */
 @EFragment
 public class GameFragment extends Fragment {
-
     private List<Game> mGames;
     private GameAdapter mAdapter;
 
@@ -53,10 +53,7 @@ public class GameFragment extends Fragment {
     public void onResume() {
         super.onResume();
         mGames = DataCenter.getInstance().getAllGames();
-        if (mAdapter != null) {
-            mAdapter.notifyDataSetChanged();
-        }
-
+        updateRecyclerView();
     }
 
     @Nullable
@@ -77,7 +74,7 @@ public class GameFragment extends Fragment {
 
             @Override
             public void onLongClick(View view, int position) {
-
+                ConfirmDeleteGameDialog.newInstance(DataCenter.getInstance().getAllGames().get(position).getGameId(), getResources().getString(R.string.confirm_delete_game)).show(getFragmentManager(), "Title");
             }
         }));
         Button btnNewGame = (Button) v.findViewById(R.id.btnNewGame);
@@ -88,6 +85,12 @@ public class GameFragment extends Fragment {
             }
         });
         return v;
+    }
+
+    public void updateRecyclerView() {
+        if (this.mAdapter != null) {
+            this.mAdapter.notifyDataSetChanged();
+        }
     }
 
     public void createSampleData() {

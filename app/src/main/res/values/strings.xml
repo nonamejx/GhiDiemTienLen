@@ -21,4 +21,11 @@
     <string name="end_game_message">Van bai da ket thuc!</string>
     <string name="btnEndGame">Xem ket qua</string>
     <string name="end_game_title_dialog">Ket thuc</string>
+    <string name="clear_all_data">Xoa tat ca</string>
+    <string name="confirm_delete_game">Ban co chac chan muon xoa?</string>
+    <string name="update_score">Sua diem</string>
+    <string name="add_score">Ghi diem</string>
+    <string name="validate_players_name_message">Ten ngan thoi, 8 ky ty</string>
+    <string name="validate_empty_string">Khong duoc de trong</string>
+    <string name="validate_number_of_turn_is_zero">So luong van phai lon hon 0</string>
 </resources>

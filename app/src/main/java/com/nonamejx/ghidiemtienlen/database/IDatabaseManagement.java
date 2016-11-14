@@ -13,4 +13,5 @@ public interface IDatabaseManagement {
     void addGameRealmObject(GameRealmObject gameRealmObject);
     void deleteAllGameRealmObjects();
     void deleteGameRealmObject(GameRealmObject gameRealmObject);
+    GameRealmObject getGame(String gameId);
 }
