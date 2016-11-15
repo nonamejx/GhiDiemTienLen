@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.andexert.library.RippleView xmlns:android="http://schemas.android.com/apk/res/android"
     rv_centered="true"
+    rv_color="@color/colorLightGray"
+    rv_rippleDuration="100"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 

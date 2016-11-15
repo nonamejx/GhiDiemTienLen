@@ -56,6 +56,7 @@ public class TrackingActivity extends AppCompatActivity implements TurnResultDia
 
     private Game game;
     private Integer currentTurn = -1;
+    private boolean isEndGame = false;
 
     @AfterViews
     void afterView() {
@@ -140,17 +141,26 @@ public class TrackingActivity extends AppCompatActivity implements TurnResultDia
 
     @Click(R.id.btnAddTurnResult)
     void addTurnResultClick() {
-        // show dialog
-        TurnResultDialog.newInstance(getResources().getString(R.string.add_score), game.getPlayerNames(), null, currentTurn).show(getSupportFragmentManager(), "Title");
+        // check is end game
+        if (isEndGame) {
+            // show confirm dialog
+            ConfirmEndGameDialog.newInstance(game.getGameId()).show(getSupportFragmentManager(), "title");
+        } else {
+            TurnResultDialog.newInstance(getResources().getString(R.string.add_score), game.getPlayerNames(), null, currentTurn).show(getSupportFragmentManager(), "Title");
+        }
     }
 
     @Override
     public void onBackPressed() {
-        // vibrate
-        Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        v.vibrate(100);
-        // show confirm dialog
-        ConfirmExitDialog.newInstance(getResources().getString(R.string.confirm_exit_tracking)).show(getSupportFragmentManager(), "Title");
+        if (isEndGame) {
+            super.onBackPressed();
+        } else {
+            // vibrate
+            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            v.vibrate(100);
+            // show confirm dialog
+            ConfirmExitDialog.newInstance(getResources().getString(R.string.confirm_exit_tracking)).show(getSupportFragmentManager(), "Title");
+        }
     }
 
     @Override
@@ -168,6 +178,7 @@ public class TrackingActivity extends AppCompatActivity implements TurnResultDia
 
         // check is end game
         if ((turnResultPosition + 1) == game.getNumberOfTurns()) {
+            isEndGame = true;
             // add to database
             DataCenter.getInstance().addGame(game);
             // show confirm dialog

@@ -175,9 +175,11 @@
         android:background="@color/colorLightGray" />
 
     <com.andexert.library.RippleView
+        rv_centered="true"
+        rv_color="@color/colorLightGray"
+        rv_rippleDuration="100"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:rv_centered="true">
+        android:layout_height="wrap_content">
 
         <Button
             android:id="@+id/btnOK"
