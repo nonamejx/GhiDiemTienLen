@@ -7,6 +7,9 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -25,7 +28,6 @@ import com.nonamejx.ghidiemtienlen.model.Game;
 import org.androidannotations.annotations.EFragment;
 
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by noname
@@ -43,10 +45,27 @@ public class GameFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         mGames = DataCenter.getInstance().getAllGames();
         mAdapter = new GameAdapter(getContext(), mGames);
-        // create sample data
-        // createSampleData();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.game_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.clear_all_data:
+                DataCenter.getInstance().deleteAllGames();
+                updateRecyclerView();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
     }
 
     @Override
@@ -90,27 +109,6 @@ public class GameFragment extends Fragment {
     public void updateRecyclerView() {
         if (this.mAdapter != null) {
             this.mAdapter.notifyDataSetChanged();
-        }
-    }
-
-    public void createSampleData() {
-        Random random = new Random();
-        for (int games = 0; games < 15; games++) {
-            String[] players = new String[4];
-            for (int i = 0; i < 4; i++) {
-                players[i] = "player" + games + "" + i;
-            }
-            int numberOfTurns = 20;
-            int[][] result = new int[numberOfTurns][players.length];
-            for (int i = 0; i < numberOfTurns; i++) {
-                for (int j = 0; j < players.length; j++) {
-                    result[i][j] = random.nextInt(4);
-                }
-            }
-            Game game = new Game(players, numberOfTurns);
-            game.setResult(result);
-
-            DataCenter.getInstance().addGame(game);
         }
     }
 }
