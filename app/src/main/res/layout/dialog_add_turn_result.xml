@@ -174,11 +174,18 @@
         android:layout_height="1dp"
         android:background="@color/colorLightGray" />
 
-    <Button
-        android:id="@+id/btnOK"
-        style="@style/fragmentNewGame_textView_playerNameSettingTitle"
+    <com.andexert.library.RippleView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="OK" />
+        app:rv_centered="true">
+
+        <Button
+            android:id="@+id/btnOK"
+            style="@style/fragmentNewGame_textView_playerNameSettingTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="OK" />
+
+    </com.andexert.library.RippleView>
 
 </LinearLayout>

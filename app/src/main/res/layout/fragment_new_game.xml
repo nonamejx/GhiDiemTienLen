@@ -236,13 +236,20 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btnStartGame"
-        style="@style/fragmentNewGame_textView_playerNameSettingTitle"
+    <com.andexert.library.RippleView
+        rv_centered="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableRight="@drawable/ic_right_arrow"
-        android:text="@string/start_game"
-        android:textAllCaps="false" />
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnStartGame"
+            style="@style/fragmentNewGame_textView_playerNameSettingTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/ic_right_arrow"
+            android:text="@string/start_game"
+            android:textAllCaps="false" />
+
+    </com.andexert.library.RippleView>
 
 </LinearLayout>
