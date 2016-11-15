@@ -46,7 +46,7 @@
         <item name="android:padding">@dimen/default_padding</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/title_setting_textSize</item>
-        <item name="android:background">@drawable/selector_button</item>
+        <item name="android:background">@drawable/button_normal</item>
         <item name="android:textColor">@color/white</item>
     </style>
 

@@ -99,13 +99,20 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btnBack"
-        style="@style/fragmentNewGame_textView_playerNameSettingTitle"
+    <com.andexert.library.RippleView
+        rv_centered="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_left_arrow"
-        android:text="@string/back"
-        android:textAllCaps="false" />
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnBack"
+            style="@style/fragmentNewGame_textView_playerNameSettingTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_left_arrow"
+            android:text="@string/back"
+            android:textAllCaps="false" />
+
+    </com.andexert.library.RippleView>
 
 </LinearLayout>
