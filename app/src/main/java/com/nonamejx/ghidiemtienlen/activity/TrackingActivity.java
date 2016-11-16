@@ -82,11 +82,11 @@ public class TrackingActivity extends AppCompatActivity implements TurnResultDia
         recyclerViewTrackingResult.addOnItemTouchListener(new RecyclerTouchListener(this, recyclerViewTrackingResult, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                TurnResultDialog.newInstance(getResources().getString(R.string.update_score), game.getPlayerNames(), game.getResult()[position], position).show(getSupportFragmentManager(), "Title");
             }
 
             @Override
             public void onLongClick(View view, int position) {
+                TurnResultDialog.newInstance(getResources().getString(R.string.update_score), game.getPlayerNames(), game.getResult()[position], position).show(getSupportFragmentManager(), "Title");
             }
         }));
     }
