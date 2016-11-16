@@ -159,7 +159,6 @@ public class TableResultFragment extends Fragment {
                 Bitmap bitmap = bitmaCache.get(String.valueOf(i));
                 bigCanvas.drawBitmap(bitmap, 0f, iHeight, paint);
                 iHeight += bitmap.getHeight();
-                bitmap.recycle();
             }
         }
         return bigBitmap;
