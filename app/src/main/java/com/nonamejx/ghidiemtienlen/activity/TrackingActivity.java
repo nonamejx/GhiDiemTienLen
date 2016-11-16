@@ -2,10 +2,12 @@ package com.nonamejx.ghidiemtienlen.activity;
 
 import android.content.Context;
 import android.os.Vibrator;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,7 +28,6 @@ import com.nonamejx.ghidiemtienlen.prefs.SharedPrefsManager;
 import com.nonamejx.ghidiemtienlen.utils.MyUtils;
 
 import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
@@ -46,8 +47,6 @@ public class TrackingActivity extends AppCompatActivity implements TurnResultDia
     TextView tvPlayer4;
     @ViewById(R.id.llResult)
     LinearLayout llResult;
-    @ViewById(R.id.btnAddTurnResult)
-    FloatingActionButton btnAddTurnResult;
     @ViewById(R.id.recyclerViewTrackingResult)
     RecyclerView recyclerViewTrackingResult;
     TextView[] tvFinalResults;
@@ -72,6 +71,10 @@ public class TrackingActivity extends AppCompatActivity implements TurnResultDia
         tvFinalResults[2] = (TextView) findViewById(R.id.tvResult3);
         tvFinalResults[3] = (TextView) findViewById(R.id.tvResult4);
 
+        if (SharedPrefsManager.getInstance(this).getSetting(Setting.SHOW_CURRENT_RESULT)) {
+            llResult.setVisibility(View.VISIBLE);
+        }
+
         recyclerViewTrackingResult.setLayoutManager(new LinearLayoutManager(this));
         adapter = new TrackingResultAdapter(this, currentTurn, game);
         recyclerViewTrackingResult.setAdapter(adapter);
@@ -88,9 +91,29 @@ public class TrackingActivity extends AppCompatActivity implements TurnResultDia
         }));
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_add_turn_result, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_item_add_turn_result) {
+            // check is end game
+            if (isEndGame) {
+                // show confirm dialog
+                ConfirmEndGameDialog.newInstance(game.getGameId()).show(getSupportFragmentManager(), "title");
+            } else {
+                TurnResultDialog.newInstance(getResources().getString(R.string.add_score), game.getPlayerNames(), null, currentTurn).show(getSupportFragmentManager(), "Title");
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void updateFinalResult() {
         if (SharedPrefsManager.getInstance(this).getSetting(Setting.SHOW_CURRENT_RESULT)) {
-            llResult.setVisibility(View.VISIBLE);
             int[] finalResult = game.calculateFinalResult();
             for (int i = 0; i < Constants.NUMBER_OF_PLAYERS; i++) {
                 tvFinalResults[i].setText(String.valueOf(finalResult[i]));
@@ -136,17 +159,6 @@ public class TrackingActivity extends AppCompatActivity implements TurnResultDia
     private void updateResult(int position, int[] result) {
         if (game != null) {
             System.arraycopy(result, 0, game.getResult()[position], 0, Constants.NUMBER_OF_PLAYERS);
-        }
-    }
-
-    @Click(R.id.btnAddTurnResult)
-    void addTurnResultClick() {
-        // check is end game
-        if (isEndGame) {
-            // show confirm dialog
-            ConfirmEndGameDialog.newInstance(game.getGameId()).show(getSupportFragmentManager(), "title");
-        } else {
-            TurnResultDialog.newInstance(getResources().getString(R.string.add_score), game.getPlayerNames(), null, currentTurn).show(getSupportFragmentManager(), "Title");
         }
     }
 
