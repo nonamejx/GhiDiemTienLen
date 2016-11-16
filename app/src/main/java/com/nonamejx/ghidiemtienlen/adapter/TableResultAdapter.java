@@ -80,7 +80,7 @@ public class TableResultAdapter extends RecyclerView.Adapter<TableResultAdapter.
         return mGame.getNumberOfTurns() + 1;
     }
 
-    class TurnDetailResultViewHolder extends RecyclerView.ViewHolder {
+    public class TurnDetailResultViewHolder extends RecyclerView.ViewHolder {
         final TextView[] tvResults;
         final Button btnBack;
 
