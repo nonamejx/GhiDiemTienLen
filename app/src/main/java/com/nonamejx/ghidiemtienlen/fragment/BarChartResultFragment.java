@@ -1,9 +1,17 @@
 package com.nonamejx.ghidiemtienlen.fragment;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -17,10 +25,12 @@ import com.nonamejx.ghidiemtienlen.R;
 import com.nonamejx.ghidiemtienlen.common.Constants;
 import com.nonamejx.ghidiemtienlen.database.DataCenter;
 import com.nonamejx.ghidiemtienlen.model.Game;
+import com.nonamejx.ghidiemtienlen.utils.MyUtils;
 
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -43,6 +53,7 @@ public class BarChartResultFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         mGame = DataCenter.getInstance().getGame(mGameId);
     }
 
@@ -73,10 +84,53 @@ public class BarChartResultFragment extends Fragment {
         barChart.setDrawGridBackground(false);
         barChart.getLegend().setEnabled(false);
         barChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
-        barChart.getXAxis().setTextSize(12);
         barChart.animateY(500);
         barChart.invalidate();
 
         return v;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_share, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_item_share) {
+            shareImage(MyUtils.saveBitmap(takeScreenShot(), getResources().getString(R.string.file_name_result_screenshot)));
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void shareImage(File file) {
+        Uri uri = Uri.fromFile(file);
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        intent.setType("image/*");
+
+        intent.putExtra(android.content.Intent.EXTRA_SUBJECT, new String("GhiDiemDanhBai"));
+        intent.putExtra(android.content.Intent.EXTRA_TEXT, new String("GhiDiemDanhBai"));
+        intent.putExtra(Intent.EXTRA_STREAM, uri);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        startActivity(Intent.createChooser(intent, "share via"));
+    }
+
+    private Bitmap takeScreenShot() {
+        Activity activity = getActivity();
+        View view = activity.getWindow().getDecorView();
+        view.setDrawingCacheEnabled(true);
+        view.buildDrawingCache();
+        Bitmap b1 = view.getDrawingCache();
+        Rect frame = new Rect();
+        activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
+        int statusBarHeight = frame.top;
+        int width = activity.getWindowManager().getDefaultDisplay().getWidth();
+        int height = activity.getWindowManager().getDefaultDisplay().getHeight();
+
+        Bitmap b = Bitmap.createBitmap(b1, 0, statusBarHeight, width, height - statusBarHeight);
+        view.destroyDrawingCache();
+        return b;
     }
 }
