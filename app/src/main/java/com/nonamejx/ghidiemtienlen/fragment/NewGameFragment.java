@@ -21,6 +21,9 @@ import com.nonamejx.ghidiemtienlen.prefs.SharedPrefsManager;
 
 import org.androidannotations.annotations.EFragment;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Created by noname
  * on 09/11/2016.
@@ -56,12 +59,23 @@ public class NewGameFragment extends Fragment {
                 isOK = false;
             }
         }
-
         // validate number of turns
         if (editTexts[4].getText().toString().length() == 0) {
             editTexts[4].setError(getResources().getString(R.string.validate_empty_string));
             isOK = false;
         } else {
+            // check duplicate players name
+            Set<String> players = new HashSet<>();
+            for (int i = 0; i < 4; i++) {
+                if (players.contains(editTexts[i].getText().toString().toLowerCase())) {
+                    editTexts[i].setError(getResources().getString(R.string.validate_duplicate_content));
+                    isOK = false;
+                    break;
+                } else {
+                    players.add(editTexts[i].getText().toString().toLowerCase());
+                }
+            }
+            // check number of turns
             int n = Integer.parseInt(editTexts[4].getText().toString());
             if (n == 0) {
                 editTexts[4].setError(getResources().getString(R.string.validate_number_of_turn_is_zero));

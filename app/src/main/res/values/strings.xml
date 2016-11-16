@@ -31,4 +31,5 @@
     <string name="menu_share">Chia sẻ</string>
     <string name="file_name_result_screenshot">ghidiemdanhbai.png</string>
     <string name="menu_add_turn_result">Thêm kết quả</string>
+    <string name="validate_duplicate_content">Tên không được trùng</string>
 </resources>
