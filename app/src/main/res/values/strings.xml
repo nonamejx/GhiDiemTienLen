@@ -21,11 +21,13 @@
     <string name="end_game_message">Ván bài đã kết thúc!</string>
     <string name="btnEndGame">Xem kết quả</string>
     <string name="end_game_title_dialog">Kết thúc</string>
-    <string name="clear_all_data">Xóa tất cả</string>
+    <string name="menu_clear_all_data">Xóa tất cả</string>
     <string name="confirm_delete_game">Bạn có chắc chắn muốn xóa?</string>
     <string name="update_score">Sửa điểm</string>
     <string name="add_score">Ghi điểm</string>
     <string name="validate_players_name_message">Tên ngắn thôi, 8 ký tự</string>
     <string name="validate_empty_string">Không được để trống</string>
     <string name="validate_number_of_turn_is_zero">Số lượng ván phải lớn hơn 0</string>
+    <string name="menu_share">Chia sẻ</string>
+    <string name="file_name_result_screenshot">ghidiemdanhbai.png</string>
 </resources>

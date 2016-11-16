@@ -4,6 +4,8 @@
     package="com.nonamejx.ghidiemtienlen">
     <uses-sdk android:minSdkVersion="16" tools:overrideLibrary="com.shawnlin.numberpicker" />
     <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <application
         android:name=".MainApp_"
         android:allowBackup="true"

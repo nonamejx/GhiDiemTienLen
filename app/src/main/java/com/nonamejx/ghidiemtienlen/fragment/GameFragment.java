@@ -52,13 +52,13 @@ public class GameFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.game_menu, menu);
+        inflater.inflate(R.menu.menu_clear_all_data, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.clear_all_data:
+            case R.id.menu_item_clear_all_data:
                 DataCenter.getInstance().deleteAllGames();
                 updateRecyclerView();
                 return true;

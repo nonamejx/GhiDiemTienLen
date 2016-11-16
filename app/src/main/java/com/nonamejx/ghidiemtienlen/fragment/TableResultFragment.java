@@ -1,11 +1,16 @@
 package com.nonamejx.ghidiemtienlen.fragment;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -16,9 +21,12 @@ import com.nonamejx.ghidiemtienlen.common.Constants;
 import com.nonamejx.ghidiemtienlen.common.DividerItemDecoration;
 import com.nonamejx.ghidiemtienlen.database.DataCenter;
 import com.nonamejx.ghidiemtienlen.model.Game;
+import com.nonamejx.ghidiemtienlen.utils.MyUtils;
 
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
+
+import java.io.File;
 
 /**
  * Created by noname
@@ -38,6 +46,7 @@ public class TableResultFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         mGame = DataCenter.getInstance().getGame(mGameId);
     }
 
@@ -60,5 +69,31 @@ public class TableResultFragment extends Fragment {
         }
 
         return v;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_share, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_item_share) {
+            shareImage(MyUtils.saveBitmap(MyUtils.takeScreenShot(getActivity()), getResources().getString(R.string.file_name_result_screenshot)));
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void shareImage(File file) {
+        Uri uri = Uri.fromFile(file);
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        intent.setType("image/*");
+
+        intent.putExtra(android.content.Intent.EXTRA_TEXT, new String("GhiDiemDanhBai"));
+        intent.putExtra(Intent.EXTRA_STREAM, uri);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        startActivity(Intent.createChooser(intent, "share via"));
     }
 }
